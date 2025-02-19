@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useLayoutEffect, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import Ticket from '../Ticket'
@@ -8,13 +8,9 @@ import Offline from '../Offline'
 const AppData = ({ store, getId, listenerOnline, listenerOffline }) => {
   const { filterTickets, offline, amountRenderTicket } = store //, chooseTabs, all, transfer0, transfer1, transfer2, transfer3
 
-  const fetchData = useCallback(() => {
+  useLayoutEffect(() => {
     getId()
-  }, [])
-
-  useEffect(() => {
-    fetchData()
-  }, [fetchData]) //, chooseTabs, all, transfer0, transfer1, transfer2, transfer3
+  }, []) //, chooseTabs, all, transfer0, transfer1, transfer2, transfer3
 
   useEffect(() => {
     listenerOnline()

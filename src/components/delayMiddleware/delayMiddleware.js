@@ -6,7 +6,7 @@ export const delayMiddleware = (store) => (next) => (action) => {
     return next(action)
   }
   store.dispatch(loadStart())
-  console.log('vbkldth')
+  console.log('работает delayMiddleware вызов loadStart, по окончанию  loadEnd')
   next(action)
   const timerId = setTimeout(() => {
     store.dispatch(loadEnd())

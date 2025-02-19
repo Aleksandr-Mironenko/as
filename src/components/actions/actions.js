@@ -4,7 +4,7 @@ export const transfer1 = () => ({ type: 'CHOICE_TRANSFER1', meta: { delayMs: 100
 export const transfer2 = () => ({ type: 'CHOICE_TRANSFER2', meta: { delayMs: 1000 } })
 export const transfer3 = () => ({ type: 'CHOICE_TRANSFER3', meta: { delayMs: 1000 } })
 // export const load = () => ({ type: 'LOAD' })
-export const pushTickets = (id, tickets) => ({ type: 'PUSH_TICKETS', id, tickets, meta: { findEnd: true } })
+export const pushTickets = (id, tickets) => ({ type: 'PUSH_TICKETS', id, tickets }) //, meta: { findEnd: true }
 export const errorFetch = () => ({ type: 'ERROR_FETCH' })
 export const offline = (bool) => ({ type: 'OFFLINE', bool })
 export const addAmountRenderTicket = () => ({ type: 'ADD_AMOUNT_RENDER_TICKET', meta: { delayMs: 1000 } })
@@ -62,14 +62,14 @@ export const getId = (retries = 5) => {
         throw new Error()
       }
       const searchId = await searchIdServer.json()
-      dispatch({ meta: { findStart: true } })
+      // dispatch({ meta: { findStart: true } })
       dispatch(getTickets(searchId.searchId))
     } catch (error) {
       if (retries > 0) {
         // dispatch({ meta: { findStart: true } })
         dispatch(getId(retries - 1))
       } else {
-        dispatch({ meta: { findStart: false } })
+        // dispatch({ meta: { findStart: false } })
         dispatch(errorFetch())
       }
     }
