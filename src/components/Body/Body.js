@@ -8,10 +8,10 @@ import actions from '../actions'
 import styles from './index.module.scss'
 
 const Body = ({ store }) => (
-  <div className={styles.body}>
+  <section className={styles.body}>
     {store.sizeMonitor > 716 ? <Filter /> : <></>}
     <GeneralPage />
-  </div>
+  </section>
 )
 const mapStateToProps = (state) => ({ store: state })
 

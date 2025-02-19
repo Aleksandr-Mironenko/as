@@ -5,9 +5,9 @@ import styles from './index.module.scss'
 
 const Logo = () => {
   return (
-    <div className={styles.logoG}>
+    <header className={styles.logoG}>
       <img src={logo} alt="logo" />
-    </div>
+    </header>
   )
 }
 export default Logo

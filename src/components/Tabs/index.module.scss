@@ -21,6 +21,9 @@ $border-radius-tabs-part: 6px;
   width: 33.3%;
   border: 1px solid $border-color;
   white-space: nowrap;
+  appearance: none;
+  background-color: white;
+  font-weight: 600;
 }
 
 .tabs-part:hover {

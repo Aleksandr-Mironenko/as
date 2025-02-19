@@ -30,30 +30,30 @@ const Ticket = ({
         <div className={styles.lower}>
           <div className={styles.where}>
             <div className={styles.route}>
-              <div>{routeThere}</div>
-              <div>{timeThere} </div>
+              <div className={styles.chapter}>{routeThere}</div>
+              <div className={styles.text}>{timeThere} </div>
             </div>
             <div className={styles.lenght}>
-              <div>В пути</div>
-              <div>{timeDurationThere} </div>
+              <div className={styles.chapter}>В ПУТИ</div>
+              <div className={styles.text}>{timeDurationThere} </div>
             </div>
             <div className={styles.stops}>
-              <div>{numberOfTransfersThere}</div>
-              <div>{stopsThereString} </div>
+              <div className={styles.chapter}>{numberOfTransfersThere}</div>
+              <div className={styles.text}>{stopsThereString} </div>
             </div>
           </div>
           <div className={styles.back}>
             <div className={styles.route}>
-              <div>{routeBack} </div>
-              <div>{timeBack} </div>
+              <div className={styles.chapter}>{routeBack} </div>
+              <div className={styles.text}>{timeBack} </div>
             </div>
             <div className={styles.lenght}>
-              <div>В пути</div>
-              <div>{timeDurationBack} </div>
+              <div className={styles.chapter}>В ПУТИ</div>
+              <div className={styles.text}>{timeDurationBack} </div>
             </div>
             <div className={styles.stops}>
-              <div>{numberOfTransfersBack}</div>
-              <div>{stopsBackString} </div>
+              <div className={styles.chapter}>{numberOfTransfersBack}</div>
+              <div className={styles.text}>{stopsBackString} </div>
             </div>
           </div>
         </div>

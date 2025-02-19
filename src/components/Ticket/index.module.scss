@@ -18,13 +18,13 @@ $where-back-height: 40px;
 $where-back-margin: 10px 0;
 
 $route-max-width: 140px;
-$route-min-width: 100px;
+$route-min-width: 120px;
 
 $lenght-max-width: 140px;
-$lenght-min-width: 60px;
+$lenght-min-width: 80px;
 
 $stops-max-width: 140px;
-$stops-min-width: 100px;
+$stops-min-width: 120px;
 
 $price-font-size: 24px;
 $price-font-weight: 600;
@@ -72,6 +72,17 @@ $price-color: rgb(33, 150, 243);
 
 .route, .lenght, .stops {
   max-width: $route-max-width;
+  font-weight: 700;
+}
+
+.chapter{
+font-size: 12px;
+color:rgb(160, 176, 185);
+margin-bottom: 6px;
+}
+
+.text{
+font-size: 14px;
 }
 
 .route {

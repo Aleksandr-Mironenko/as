@@ -76,10 +76,10 @@ const inputFormatting = (data) => {
 
   const numberOfTransfers = (direction) => {
     return direction.stops.length === 0
-      ? 'Без пересадок'
+      ? 'БЕЗ ПЕРЕСАДОК'
       : direction.stops.length === 1
-        ? `${direction.stops.length} пересадка`
-        : `${direction.stops.length} пересадки`
+        ? `${direction.stops.length} ПЕРЕСАДКА`
+        : `${direction.stops.length} ПЕРЕСАДКИ`
   }
 
   const formatedPrice = (price) => {
@@ -174,10 +174,15 @@ const reducer = (state = initialState, action) => {
         tickets: inputFormatting(action.tickets),
         filterTickets: filtered(inputFormatting(action.tickets), state.chooseTransfer, state.chooseTabs),
       }
-    case 'LOAD':
+    case 'LOAD_START':
       return {
         ...state,
-        load: !state.load,
+        load: true,
+      }
+    case 'LOAD_END':
+      return {
+        ...state,
+        load: false,
       }
     case 'ERROR_FETCH':
       return {

@@ -2,5 +2,7 @@ body {
   position: relative;
    background: rgb(243, 247, 250);
    margin:0;
-   padding: 0
+   padding: 0;
+   overflow-y: scroll;
+   font-family: 'Open Sans', sans-serif;
   }

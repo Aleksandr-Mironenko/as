@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fontsource/open-sans": "^5.1.1",
     "cra-template": "1.2.0",
     "css-loader": "^7.1.2",
     "date-fns": "^4.1.0",

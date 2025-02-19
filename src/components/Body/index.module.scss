@@ -1,6 +1,7 @@
 .body {
   display:flex;
   justify-content: center;
+  box-sizing: border-box; 
 }
 @media (max-width:503px){
   .body {

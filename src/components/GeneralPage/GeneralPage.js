@@ -13,8 +13,9 @@ import styles from './index.module.scss'
 const GeneralPage = ({ store, addAmountRenderTicket, sizeMonitor }) => {
   const { chooseTransfer, load } = store
 
+  const content = load ? <Loading /> : <AppData />
   const addButton = load ? (
-    <Loading />
+    <></>
   ) : chooseTransfer.length > 0 ? (
     <button className={styles.buttonBottom} onClick={addAmountRenderTicket}>
       ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
@@ -23,23 +24,28 @@ const GeneralPage = ({ store, addAmountRenderTicket, sizeMonitor }) => {
     <ZeroTickets />
   )
 
-  useEffect(() => {
-    const handleResize = () => {
-      sizeMonitor(window.innerWidth)
-    }
+  useEffect(
+    () => {
+      const handleResize = () => {
+        sizeMonitor(window.innerWidth)
+      }
 
-    window.addEventListener('resize', handleResize)
+      window.addEventListener('resize', handleResize)
 
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
+    },
+    [
+      // sizeMonitor
+    ]
+  )
 
   return (
     <div className={styles.generalPage}>
       <Tabs />
       {store.sizeMonitor > 716 ? <></> : <Filter />}
-      <AppData />
+      {content}
       {addButton}
     </div>
   )
