@@ -3,14 +3,15 @@ export const transfer0 = () => ({ type: 'CHOICE_TRANSFER0', meta: { delayMs: 100
 export const transfer1 = () => ({ type: 'CHOICE_TRANSFER1', meta: { delayMs: 1000 } })
 export const transfer2 = () => ({ type: 'CHOICE_TRANSFER2', meta: { delayMs: 1000 } })
 export const transfer3 = () => ({ type: 'CHOICE_TRANSFER3', meta: { delayMs: 1000 } })
-// export const load = () => ({ type: 'LOAD' })
-export const pushTickets = (id, tickets) => ({ type: 'PUSH_TICKETS', id, tickets }) //, meta: { findEnd: true }
+
+export const pushTickets = (id, tickets) => ({ type: 'PUSH_TICKETS', id, tickets })
 export const errorFetch = () => ({ type: 'ERROR_FETCH' })
 export const offline = (bool) => ({ type: 'OFFLINE', bool })
 export const addAmountRenderTicket = () => ({ type: 'ADD_AMOUNT_RENDER_TICKET', meta: { delayMs: 1000 } })
 export const sizeMonitor = (size = window.innerWidth) => ({ type: 'SIZE_MONITOR', size })
 export const loadStart = () => ({ type: 'LOAD_START' })
 export const loadEnd = () => ({ type: 'LOAD_END' })
+export const isStop = () => ({ type: 'IS_STOP' })
 export const listenerOnline = () => {
   return (dispatch) =>
     window.addEventListener('offline', () => {
@@ -27,34 +28,38 @@ export const listenerOffline = () => {
 
 export const handleTabsClick = (chooseTabs) => ({ type: 'CHOICE_TABS', chooseTabs, meta: { delayMs: 1000 } })
 
-export const getTickets = (searchId, accumulatedTickets = []) => {
+export const getTickets = (searchId, retries = 5) => {
   return async (dispatch) => {
+    if (retries <= 0) {
+      dispatch(loadEnd())
+      dispatch(errorFetch())
+      return
+    }
+
     try {
       const searchContent = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
 
       if (!searchContent.ok) {
-        dispatch(getTickets(searchId, accumulatedTickets))
+        throw new Error()
       } else {
         const content = await searchContent.json()
 
-        const newAccumulatedTickets = [...accumulatedTickets, ...content.tickets]
-        if (!content.stop) {
-          dispatch(getTickets(searchId, newAccumulatedTickets))
-        } else {
-          dispatch(pushTickets(searchId, newAccumulatedTickets))
-          console.log('билеты загружены')
-          // dispatch(loadEnd())
+        dispatch(pushTickets(searchId, content.tickets))
+        if (content.stop === false) {
+          dispatch(getTickets(searchId))
+        }
+        if (content.stop === true) {
+          dispatch(isStop())
         }
       }
     } catch (error) {
-      dispatch(getTickets(searchId, accumulatedTickets))
+      dispatch(getTickets(searchId, retries - 1))
     }
   }
 }
-//
+
 export const getId = (retries = 5) => {
   return async (dispatch) => {
-    // dispatch(loadStart())
     try {
       const searchIdServer = await fetch('https://aviasales-test-api.kata.academy/search')
 
@@ -62,14 +67,11 @@ export const getId = (retries = 5) => {
         throw new Error()
       }
       const searchId = await searchIdServer.json()
-      // dispatch({ meta: { findStart: true } })
       dispatch(getTickets(searchId.searchId))
     } catch (error) {
       if (retries > 0) {
-        // dispatch({ meta: { findStart: true } })
         dispatch(getId(retries - 1))
       } else {
-        // dispatch({ meta: { findStart: false } })
         dispatch(errorFetch())
       }
     }

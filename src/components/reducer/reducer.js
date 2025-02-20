@@ -3,18 +3,19 @@ import { add } from 'date-fns'
 const initialState = {
   tickets: [],
   filterTickets: [],
-  chooseTransfer: [],
+  chooseTransfer: [0, 1, 2, 3],
   chooseTabs: 1,
   amountRenderTicket: 5,
   offline: false,
   load: false,
-  all: false,
-  transfer0: false,
-  transfer1: false,
-  transfer2: false,
-  transfer3: false,
+  all: true,
+  transfer0: true,
+  transfer1: true,
+  transfer2: true,
+  transfer3: true,
   errorFetch: false,
   sizeMonitor: window.innerWidth,
+  stop: false,
 }
 
 const sortedForTab = (filterTickets, tab) => {
@@ -168,12 +169,16 @@ const reducer = (state = initialState, action) => {
         chooseTabs: action.chooseTabs,
         filterTickets: sortedForTab(state.filterTickets, action.chooseTabs),
       }
-    case 'PUSH_TICKETS':
+    case 'PUSH_TICKETS': {
+      const formattedTickets = inputFormatting(action.tickets)
+      const newTickets = [...state.tickets, ...formattedTickets]
       return {
         ...state,
-        tickets: inputFormatting(action.tickets),
-        filterTickets: filtered(inputFormatting(action.tickets), state.chooseTransfer, state.chooseTabs),
+        tickets: newTickets,
+        filterTickets: filtered(newTickets, state.chooseTransfer, state.chooseTabs),
       }
+    }
+
     case 'LOAD_START':
       return {
         ...state,
@@ -204,6 +209,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         sizeMonitor: action.size,
       }
+
+    case 'IS_STOP':
+      return { ...state, stop: true }
     default:
       return { ...state }
   }

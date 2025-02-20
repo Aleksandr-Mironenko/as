@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
 
 import AppData from '../AppData'
@@ -10,19 +10,21 @@ import Filter from '../Filter'
 
 import styles from './index.module.scss'
 
-const GeneralPage = ({ store, addAmountRenderTicket, sizeMonitor }) => {
-  const { chooseTransfer, load } = store
+const GeneralPage = ({ store, addAmountRenderTicket, sizeMonitor, getId, listenerOnline, listenerOffline }) => {
+  const { chooseTransfer, load, stop } = store
 
   const content = load ? <Loading /> : <AppData />
-  const addButton = load ? (
-    <></>
-  ) : chooseTransfer.length > 0 ? (
-    <button className={styles.buttonBottom} onClick={addAmountRenderTicket}>
-      ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
-    </button>
-  ) : (
-    <ZeroTickets />
-  )
+  const stopLoadFeth = !stop ? <Loading /> : content
+  const addButton =
+    !stop || load ? (
+      <></>
+    ) : chooseTransfer.length > 0 ? (
+      <button className={styles.buttonBottom} onClick={addAmountRenderTicket}>
+        ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
+      </button>
+    ) : (
+      <ZeroTickets />
+    )
 
   useEffect(
     () => {
@@ -41,11 +43,27 @@ const GeneralPage = ({ store, addAmountRenderTicket, sizeMonitor }) => {
     ]
   )
 
+  const fetchIdTickets = useCallback(() => {
+    getId()
+  }, [getId])
+
+  useEffect(() => {
+    fetchIdTickets()
+  }, [fetchIdTickets]) //, chooseTabs, all, transfer0, transfer1, transfer2, transfer3
+
+  useEffect(() => {
+    listenerOnline()
+    listenerOffline()
+  }),
+    [
+      // listenerOnline, listenerOffline
+    ]
+
   return (
     <div className={styles.generalPage}>
       <Tabs />
       {store.sizeMonitor > 716 ? <></> : <Filter />}
-      {content}
+      {stopLoadFeth}
       {addButton}
     </div>
   )

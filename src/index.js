@@ -13,7 +13,7 @@ const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose
-const store = createStore(reducer, composeEnhancers(applyMiddleware(reduxThunk, delayMiddleware))) //delayMiddlewareFetch
+const store = createStore(reducer, composeEnhancers(applyMiddleware(reduxThunk, delayMiddleware))) //,delayMiddlewareFetch
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>

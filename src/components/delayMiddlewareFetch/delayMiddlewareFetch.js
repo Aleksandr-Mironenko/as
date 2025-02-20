@@ -5,8 +5,8 @@
 //   const find = action?.meta?.findStart || action?.meta?.findEnd
 
 //   if (!find) {
-//     //&& !store.getState().tickets.length && !store.getState().errorFetch
 //     next(action)
+//     return
 //   }
 //   if (action?.meta?.findStart) {
 //     store.dispatch(loadStart())
